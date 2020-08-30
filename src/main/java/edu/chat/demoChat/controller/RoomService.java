@@ -1,20 +1,18 @@
 package edu.chat.demoChat.controller;
 
-import edu.chat.demoChat.model.Guest;
-import edu.chat.demoChat.model.Room;
-import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.support.GenericMessage;
+import org.springframework.messaging.simp.stomp.StompCommand;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
+import edu.chat.demoChat.model.Guest;
+import lombok.RequiredArgsConstructor;
+import edu.chat.demoChat.model.Room;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,10 +34,11 @@ public class RoomService {
 
     sessionIdToRoomId.put(sessionId, roomId);
 
-    SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+    StompHeaderAccessor headerAccessor = StompHeaderAccessor.create(StompCommand.MESSAGE);
     headerAccessor.setSessionId(sessionId);
 
-    messagingTemplate.convertAndSendToUser(sessionId, "/queue/registeredUser", room.addGuest(new Guest(sessionId)), headerAccessor.getMessageHeaders());
+    messagingTemplate.convertAndSend("/queue/room/" + roomId + "/guestHasJoined", room.addGuest(new Guest(sessionId)));
+    messagingTemplate.convertAndSendToUser(sessionId, "/queue/room/" + roomId + "/currentUser", room.getGuest(sessionId), headerAccessor.getMessageHeaders());
   }
 
   public void leaveGuest(String sessionId) {
@@ -49,6 +48,12 @@ public class RoomService {
     room.removeGuest(sessionId);
 
     messagingTemplate.convertAndSend("/queue/room/" + roomId + "/guestHasLeaved", sessionId);
+  }
+
+  public List<Guest> getGuests(String roomId) {
+    var room = findRoomById(roomId);
+
+    return room.getGuestList();
   }
 
   public Room getRoom(String id) {

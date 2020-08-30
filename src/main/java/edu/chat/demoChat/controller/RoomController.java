@@ -1,5 +1,6 @@
 package edu.chat.demoChat.controller;
 
+import edu.chat.demoChat.model.Guest;
 import edu.chat.demoChat.model.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -10,11 +11,13 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/room")
 @RequiredArgsConstructor
+@RequestMapping("api/room")
 public class RoomController {
   private final RoomService roomService;
 
@@ -33,6 +36,15 @@ public class RoomController {
       var room = roomService.getRoom(roomId);
 
       return ResponseEntity.ok(room);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @GetMapping("{roomId}/guest")
+  public ResponseEntity<List<Guest>> getGuests(@PathVariable("roomId") String roomId) {
+    try {
+      return ResponseEntity.ok(roomService.getGuests(roomId));
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }

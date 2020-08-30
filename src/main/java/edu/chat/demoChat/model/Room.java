@@ -32,6 +32,14 @@ public class Room {
         .collect(Collectors.toList());
   }
 
+  public Guest getGuest(String sessionId) {
+    return guestList
+        .stream()
+        .filter(guest -> guest.getSessionId().equals(sessionId))
+        .findAny()
+        .orElseThrow();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
