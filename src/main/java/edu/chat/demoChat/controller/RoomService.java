@@ -31,7 +31,7 @@ public class RoomService {
     return newRoom;
   }
 
-  public void registerUser(String roomId, String sessionId) {
+  public void joinUser(String roomId, String sessionId) {
     var room = findRoomById(roomId);
 
     sessionIdToRoomId.put(sessionId, roomId);
@@ -42,15 +42,17 @@ public class RoomService {
     messagingTemplate.convertAndSendToUser(sessionId, "/queue/registeredUser", room.addGuest(new Guest(sessionId)), headerAccessor.getMessageHeaders());
   }
 
-  public void removeGuest(String sessionId) {
-//    var room = findRoomById(sessionIdToRoomId.get(sessionId));
-//
-//    room.removeGuest(sessionId);
+  public void leaveGuest(String sessionId) {
+    var roomId = sessionIdToRoomId.get(sessionId);
+    var room = findRoomById(roomId);
 
-    SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
-    headerAccessor.setSessionId(sessionId);
+    room.removeGuest(sessionId);
 
-    messagingTemplate.convertAndSend("/topic/guestList", "SUCCESS", headerAccessor.getMessageHeaders());
+    messagingTemplate.convertAndSend("/queue/room/" + roomId + "/guestHasLeaved", sessionId);
+  }
+
+  public Room getRoom(String id) {
+    return this.findRoomById(id);
   }
 
   private Room findRoomById(String id) {

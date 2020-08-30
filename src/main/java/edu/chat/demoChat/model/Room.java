@@ -18,7 +18,7 @@ public class Room {
   private List<Guest> guestList;
 
   public Guest addGuest(Guest guest) {
-    guest.setName("Guest" + this.getGuestList().size() + 1);
+    guest.setName("Guest" + (this.getGuestList().size() + 1));
 
     this.getGuestList().add(guest);
 
