@@ -51,6 +51,8 @@ public class RoomService {
 
     room.removeGuest(sessionId);
 
+    sessionIdToRoomId.remove(sessionId);
+
     messagingTemplate.convertAndSend("/queue/room/" + roomId + "/guestHasLeaved", guest);
   }
 
