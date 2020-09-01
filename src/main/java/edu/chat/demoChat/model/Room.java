@@ -58,14 +58,8 @@ public class Room {
   }
 
   private String generateUniqueGuestName() {
-    String name = "Guest 1";
-
-    if (this.guestList.isEmpty()) {
-      return name;
-    }
-
     for (int i = 1; i <= this.guestList.size(); i++) {
-      name = "Guest " + i;
+      String name = "Guest " + i;
 
       if (!names.contains(name)) {
         names.add(name);
