@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -19,12 +17,14 @@ public class Room {
   private LocalDateTime lastActiveTime;
   private List<Guest> guestList;
   private List<String> names;
+  private List<Message> messages;
 
   public Room(String id, LocalDateTime lastActiveTime) {
     this.id = id;
     this.lastActiveTime = lastActiveTime;
     this.guestList = new ArrayList<>();
     this.names = new ArrayList<>();
+    this.messages = new ArrayList<>();
   }
 
   public Guest addGuest(Guest guest) {
@@ -47,6 +47,14 @@ public class Room {
         .collect(Collectors.toList());
 
     names = names.stream().filter(n -> !n.equals(name)).collect(Collectors.toList());
+  }
+
+  public Message addMessage(String sessionId, String message) {
+    var msg = new Message(getGuest(sessionId).getName(), message, LocalDateTime.now());
+
+    messages.add(msg);
+
+    return msg;
   }
 
   public Guest getGuest(String sessionId) {

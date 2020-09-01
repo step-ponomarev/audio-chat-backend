@@ -1,5 +1,6 @@
 package edu.chat.demoChat.controller;
 
+import edu.chat.demoChat.model.Message;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import edu.chat.demoChat.model.Room;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +28,14 @@ public class RoomService {
     rooms.add(newRoom);
 
     return newRoom;
+  }
+
+  public void sendMessage(String sessionId, String message) {
+    var roomId = sessionIdToRoomId.get(sessionId);
+    var room = findRoomById(roomId);
+    var msg = room.addMessage(sessionId, message);
+
+    messagingTemplate.convertAndSend("/queue/room/" + roomId + "/newMessage", msg);
   }
 
   public void joinUser(String roomId, String sessionId) {
@@ -71,6 +79,10 @@ public class RoomService {
 
   public Room getRoom(String id) {
     return this.findRoomById(id);
+  }
+
+  public List<Message> getMessages(String roomId) {
+    return findRoomById(roomId).getMessages();
   }
 
   private void sendToAll(List<Guest> guests, String url, Object body) {
