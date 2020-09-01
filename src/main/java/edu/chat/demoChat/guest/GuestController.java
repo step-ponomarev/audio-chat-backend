@@ -18,9 +18,9 @@ public class GuestController {
   private final GuestService guestService;
 
   @GetMapping("room/{roomId}")
-  public ResponseEntity<List<Guest>> getGuestsWithoutCurrent(@PathVariable("roomId") String roomId, @Header("simpSessionId") String sessionId) {
+  public ResponseEntity<List<Guest>> getGuests(@PathVariable("roomId") String roomId, @Header("simpSessionId") String sessionId) {
     try {
-      return ResponseEntity.ok(guestService.getGuestsWithoutCurrent(roomId, sessionId));
+      return ResponseEntity.ok(guestService.getGuests(roomId));
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
@@ -28,6 +28,7 @@ public class GuestController {
 
   @MessageMapping("guest/room/{roomId}/registerGuest")
   public void registerGuest(@DestinationVariable String roomId, @Header("simpSessionId") String sessionId) {
+
     guestService.addGuest(sessionId, roomId);
   }
 }

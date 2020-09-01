@@ -1,4 +1,4 @@
-package edu.chat.demoChat.signaler;
+package edu.chat.demoChat.signalingService;
 
 import edu.chat.demoChat.message.Message;
 
@@ -7,7 +7,7 @@ public interface SignalingService {
 
   void signalToJoinedGuest(String id, String roomId);
 
-  void signalGuestLeavedRoom(String id);
-
   void signalMessageSended(Message message);
+
+  void signalGuestLeavedRoom(String id);
 }

@@ -10,4 +10,6 @@ public interface GuestService {
   Guest addGuest(String roomId, String sessionId);
 
   void removeGuest(String sessionId);
+
+  List<Guest> getGuests(String roomId);
 }

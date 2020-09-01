@@ -1,4 +1,4 @@
-package edu.chat.demoChat.signaler;
+package edu.chat.demoChat.signalingService;
 
 import edu.chat.demoChat.guest.Guest;
 import edu.chat.demoChat.guest.repository.GuestRepository;
@@ -10,12 +10,14 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Service
 @RequiredArgsConstructor
-@Component
 public class DefaultSignalingService implements SignalingService {
   private final SimpMessagingTemplate messagingTemplate;
   @Qualifier("memoryGuestRepository")
@@ -23,7 +25,10 @@ public class DefaultSignalingService implements SignalingService {
 
   @Override
   public void signalGuestJoinedRoom(String guestId, String roomId) {
-    var guests = guestRepository.findByRoomId(roomId);
+    var guests = guestRepository.findByRoomId(roomId).stream()
+        .filter(g -> !g.getId().equals(guestId))
+        .collect(Collectors.toList());
+
     var url = "/queue/room/" + roomId + "/guestHasJoined";
     var joinedGuest = guestRepository.findById(guestId);
 
@@ -32,7 +37,7 @@ public class DefaultSignalingService implements SignalingService {
 
   @Override
   public void signalToJoinedGuest(String id, String roomId) {
-    var guest = guestRepository.findByRoomId(roomId);
+    var guest = guestRepository.findById(id);
     var url = "/queue/room/" + roomId + "/currentUser";
 
     StompHeaderAccessor headerAccessor = StompHeaderAccessor.create(StompCommand.MESSAGE);
@@ -58,8 +63,11 @@ public class DefaultSignalingService implements SignalingService {
   }
 
   @EventListener
-  private void handleSessionDisconnect(SessionDisconnectEvent event) {
-    guestRepository.delete(event.getSessionId());
+  public void handleSessionDisconnect(SessionDisconnectEvent event) {
+    var guestId = event.getSessionId();
+
+    this.signalGuestLeavedRoom(guestId);
+    guestRepository.delete(guestId);
   }
 
   private void sendToAll(List<Guest> guests, String url, Object body) {

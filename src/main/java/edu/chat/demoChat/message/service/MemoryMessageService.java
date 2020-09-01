@@ -3,7 +3,7 @@ package edu.chat.demoChat.message.service;
 import edu.chat.demoChat.guest.repository.GuestRepository;
 import edu.chat.demoChat.message.Message;
 import edu.chat.demoChat.message.repository.MessageRepository;
-import edu.chat.demoChat.signaler.SignalingService;
+import edu.chat.demoChat.signalingService.SignalingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
