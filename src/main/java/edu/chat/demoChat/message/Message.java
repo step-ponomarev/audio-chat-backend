@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 public class Message {
-  private String senderId;
+  private String senderName;
   private String roomId;
   private String message;
   private LocalDateTime sendDate;
