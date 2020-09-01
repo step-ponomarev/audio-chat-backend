@@ -13,7 +13,6 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.List;
 
-
 @RestController
 @CrossOrigin("*")
 @RequiredArgsConstructor
@@ -42,9 +41,9 @@ public class RoomController {
   }
 
   @GetMapping("{roomId}/guest")
-  public ResponseEntity<List<Guest>> getGuests(@PathVariable("roomId") String roomId) {
+  public ResponseEntity<List<Guest>> getGuestsWithoutCurrent(@PathVariable("roomId") String roomId, @Header("simpSessionId") String sessionId) {
     try {
-      return ResponseEntity.ok(roomService.getGuests(roomId));
+      return ResponseEntity.ok(roomService.getGuestsWithoutCurrent(roomId, sessionId));
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }

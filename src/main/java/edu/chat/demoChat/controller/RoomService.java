@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,23 +32,26 @@ public class RoomService {
 
   public void joinUser(String roomId, String sessionId) {
     var room = findRoomById(roomId);
+    var guests = room.getGuestList();
+    var guest = room.addGuest(new Guest(sessionId));
 
     sessionIdToRoomId.put(sessionId, roomId);
 
     StompHeaderAccessor headerAccessor = StompHeaderAccessor.create(StompCommand.MESSAGE);
     headerAccessor.setSessionId(sessionId);
 
-    messagingTemplate.convertAndSend("/queue/room/" + roomId + "/guestHasJoined", room.addGuest(new Guest(sessionId)));
-    messagingTemplate.convertAndSendToUser(sessionId, "/queue/room/" + roomId + "/currentUser", room.getGuest(sessionId), headerAccessor.getMessageHeaders());
+    messagingTemplate.convertAndSendToUser(sessionId, "/queue/room/" + roomId + "/currentUser", guest, headerAccessor.getMessageHeaders());
+    sendToAll(getGuestsWithout(sessionId, guests), "/queue/room/" + roomId + "/guestHasJoined", guest);
   }
 
   public void leaveGuest(String sessionId) {
     var roomId = sessionIdToRoomId.get(sessionId);
     var room = findRoomById(roomId);
+    var guest = room.getGuest(sessionId);
 
     room.removeGuest(sessionId);
 
-    messagingTemplate.convertAndSend("/queue/room/" + roomId + "/guestHasLeaved", sessionId);
+    messagingTemplate.convertAndSend("/queue/room/" + roomId + "/guestHasLeaved", guest);
   }
 
   public List<Guest> getGuests(String roomId) {
@@ -56,8 +60,27 @@ public class RoomService {
     return room.getGuestList();
   }
 
+  public List<Guest> getGuestsWithoutCurrent(String roomId, String sessionId) {
+    var room = findRoomById(roomId);
+
+    return getGuestsWithout(sessionId, room.getGuestList());
+  }
+
+
   public Room getRoom(String id) {
     return this.findRoomById(id);
+  }
+
+  private void sendToAll(List<Guest> guests, String url, Object body) {
+    guests.forEach(g -> {
+      StompHeaderAccessor headerAccessor = StompHeaderAccessor.create(StompCommand.MESSAGE);
+      headerAccessor.setSessionId(g.getSessionId());
+      messagingTemplate.convertAndSendToUser(g.getSessionId(), url, body, headerAccessor.getMessageHeaders());
+    });
+  }
+
+  private List<Guest> getGuestsWithout(String sessionId, List<Guest> guests) {
+    return guests.stream().filter(g -> !g.getSessionId().equals(sessionId)).collect(Collectors.toList());
   }
 
   private Room findRoomById(String id) {
