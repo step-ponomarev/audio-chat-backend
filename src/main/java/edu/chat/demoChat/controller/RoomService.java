@@ -23,7 +23,7 @@ public class RoomService {
   private final List<Room> rooms;
 
   public Room createRoom() {
-    final var newRoom = new Room(UUID.randomUUID().toString(), LocalDateTime.now(), new ArrayList<>());
+    final var newRoom = new Room(UUID.randomUUID().toString(), LocalDateTime.now());
 
     rooms.add(newRoom);
 

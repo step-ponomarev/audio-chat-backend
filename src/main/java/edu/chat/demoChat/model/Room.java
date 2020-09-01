@@ -2,23 +2,36 @@ package edu.chat.demoChat.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Room {
   private String id;
   private LocalDateTime lastActiveTime;
   private List<Guest> guestList;
+  private List<String> names;
+
+  public Room(String id, LocalDateTime lastActiveTime) {
+    this.id = id;
+    this.lastActiveTime = lastActiveTime;
+    this.guestList = new ArrayList<>();
+    this.names = new ArrayList<>();
+  }
 
   public Guest addGuest(Guest guest) {
-    guest.setName("Guest" + (this.getGuestList().size() + 1));
+    final String name = generateUniqueGuestName();
+
+    names.add(name);
+    guest.setName(name);
 
     this.getGuestList().add(guest);
 
@@ -26,10 +39,14 @@ public class Room {
   }
 
   public void removeGuest(String sessionId) {
+    var name = getGuest(sessionId).getName();
+
     guestList = guestList
         .stream()
         .filter(guest -> !guest.getSessionId().equals(sessionId))
         .collect(Collectors.toList());
+
+    names = names.stream().filter(n -> !n.equals(name)).collect(Collectors.toList());
   }
 
   public Guest getGuest(String sessionId) {
@@ -38,6 +55,25 @@ public class Room {
         .filter(guest -> guest.getSessionId().equals(sessionId))
         .findAny()
         .orElseThrow();
+  }
+
+  private String generateUniqueGuestName() {
+    String name = "Guest 1";
+
+    if (this.guestList.isEmpty()) {
+      return name;
+    }
+
+    for (int i = 1; i <= this.guestList.size(); i++) {
+      name = "Guest " + i;
+
+      if (!names.contains(name)) {
+        names.add(name);
+        return name;
+      }
+    }
+
+    return "Guest " + (this.getGuestList().size() + 1);
   }
 
   @Override
