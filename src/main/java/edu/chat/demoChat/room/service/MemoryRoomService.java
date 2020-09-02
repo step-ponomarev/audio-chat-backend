@@ -17,8 +17,8 @@ public class MemoryRoomService implements RoomService {
   private final RoomRepository roomRepository;
 
   @Override
-  public Room createRoom() {
-    final var newRoom = new Room(UUID.randomUUID().toString(), LocalDateTime.now());
+  public Room createRoom(String audioRoomId) {
+    final var newRoom = new Room(UUID.randomUUID().toString(), Long.parseLong(audioRoomId), LocalDateTime.now());
 
     return roomRepository.save(newRoom);
   }

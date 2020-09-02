@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class RoomController {
   private final MemoryRoomService roomService;
 
-  @GetMapping("create")
-  public ResponseEntity<String> createRoom() {
+  @PostMapping("create")
+  public ResponseEntity<Room> createRoom(@RequestBody String audioRoomId) {
     try {
-      return ResponseEntity.ok(roomService.createRoom().getId());
+      return ResponseEntity.ok(roomService.createRoom(audioRoomId));
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }

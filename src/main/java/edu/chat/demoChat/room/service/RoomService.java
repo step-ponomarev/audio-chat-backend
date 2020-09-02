@@ -3,6 +3,6 @@ import edu.chat.demoChat.room.Room;
 
 
 public interface RoomService {
-  Room createRoom();
+  Room createRoom(String audioRoomId);
   Room getRoom(String roomId);
 }
