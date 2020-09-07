@@ -1,11 +1,14 @@
 package edu.chat.demoChat.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.net.http.HttpClient;
 
 @Configuration
 public class BeanConfig {
-//  @Bean
-//  public SimpMessagingTemplate simpMessagingTemplate() {
-//    return new SimpMessagingTemplate.;
-//  }
+  @Bean
+  public HttpClient httpClient() {
+    return HttpClient.newHttpClient();
+  }
 }

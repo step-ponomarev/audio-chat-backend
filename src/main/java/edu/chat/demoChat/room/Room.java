@@ -15,12 +15,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class Room {
   private String id;
-  private Long audioRoomId;
   private LocalDateTime lastActiveTime;
 
-  public Room(String id, Long audioRoomId, LocalDateTime lastActiveTime) {
+  public Room(String id, LocalDateTime lastActiveTime) {
     this.id = id;
-    this.audioRoomId = audioRoomId;
     this.lastActiveTime = lastActiveTime;
   }
 

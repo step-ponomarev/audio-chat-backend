@@ -28,6 +28,7 @@ public class GuestController {
 
   @MessageMapping("guest/room/{roomId}/registerGuest")
   public void registerGuest(@DestinationVariable String roomId, @Header("simpSessionId") String sessionId) {
+    System.out.println(roomId);
 
     guestService.addGuest(sessionId, roomId);
   }

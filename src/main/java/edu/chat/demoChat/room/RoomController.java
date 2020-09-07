@@ -13,9 +13,9 @@ public class RoomController {
   private final MemoryRoomService roomService;
 
   @PostMapping("create")
-  public ResponseEntity<Room> createRoom(@RequestBody String audioRoomId) {
+  public ResponseEntity<Room> createRoom() {
     try {
-      return ResponseEntity.ok(roomService.createRoom(audioRoomId));
+      return ResponseEntity.ok(roomService.createRoom());
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
