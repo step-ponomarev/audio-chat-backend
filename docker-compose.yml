@@ -1,12 +1,8 @@
 version: '2.1'
 services:
-
-  #
-  # edu.chat.demoChat.janus-gateway
-  #
   janus-gateway:
     image: 'canyan/janus-gateway:latest'
-    command: ["/usr/local/bin/edu.chat.demoChat.janus", "-F", "/usr/local/etc/edu.chat.demoChat.janus"]
+    command: ["/usr/local/bin/janus", "-F", "/usr/local/etc/janus"]
     ports:
       - "8188:8188"
       - "8088:8088"
@@ -15,5 +11,5 @@ services:
       - "7088:7088"
       - "7089:7089"
     volumes:
-      - "./.conf/edu.chat.demoChat.janus/edu.chat.demoChat.janus.plugin.audiobridge.jcfg:/usr/local/etc/edu.chat.demoChat.janus/edu.chat.demoChat.janus.plugin.audiobridge.jcfg"
+      - "./.conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
     restart: always

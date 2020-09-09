@@ -24,33 +24,50 @@ public class AudioBridgeJanusService implements JanusService {
 
   @Override
   public void createAudioRoom(CreateAudioRoomDTO createAudioRoomDTO, String sessionId, String handleId) throws IOException, InterruptedException {
-    var url = HOST + "/" + sessionId + "/" + handleId;
-    var request = createRequest(url, createAudioRoomDTO);
+    var uri = URI.create(HOST + "/" + sessionId + "/" + handleId);
+    var request = createRequest(uri, createAudioRoomDTO);
 
     httpClient.send(request, HttpResponse.BodyHandlers.ofString());
   }
 
+  /**
+   * Creates a new session on Janus server
+   *
+   * @param createSessionDTO
+   * @return Id of created session
+   * @throws IOException
+   * @throws InterruptedException
+   */
   @Override
   public String createSession(CreateSessionDTO createSessionDTO) throws IOException, InterruptedException {
-    var url = HOST;
-    var request = createRequest(url, createSessionDTO);
+    var uri = URI.create(HOST);
+    var request = createRequest(uri, createSessionDTO);
     var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
     return getIdFromResponse(response.body());
   }
 
+  /**
+   * Creates new plugin handler for current session
+   *
+   * @param attachAudioBridgePluginDTO
+   * @param sessionId
+   * @return Id of created plugin handler
+   * @throws IOException
+   * @throws InterruptedException
+   */
   @Override
   public String attachAudioBridgePlugin(AttachAudioBridgePluginDTO attachAudioBridgePluginDTO, String sessionId) throws IOException, InterruptedException {
-    var url = HOST + "/" + sessionId;
-    var request = createRequest(url, attachAudioBridgePluginDTO);
+    var uri = URI.create(HOST + "/" + sessionId);
+    var request = createRequest(uri, attachAudioBridgePluginDTO);
     var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
     return getIdFromResponse(response.body());
   }
 
-  private HttpRequest createRequest(String url, Object body) throws JsonProcessingException {
+  private HttpRequest createRequest(URI uri, Object body) throws JsonProcessingException {
     return HttpRequest.newBuilder()
-        .uri(URI.create(url))
+        .uri(uri)
         .header("Content-Type", "application/json")
         .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(body)))
         .build();

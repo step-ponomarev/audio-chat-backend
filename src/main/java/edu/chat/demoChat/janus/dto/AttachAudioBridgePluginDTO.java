@@ -9,6 +9,6 @@ import lombok.Setter;
 @Builder
 public class AttachAudioBridgePluginDTO {
   private final String janus = "attach";
-  private final String plugin = "edu.chat.demoChat.janus.plugin.audiobridge";
+  private final String plugin = "janus.plugin.audiobridge";
   private String transaction;
 }

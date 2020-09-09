@@ -3,6 +3,7 @@ package edu.chat.demoChat.message;
 import edu.chat.demoChat.message.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -17,7 +18,7 @@ import java.util.List;
 public class MessageController {
   private final MessageService messageService;
 
-  @GetMapping("/room/{roomId}")
+  @GetMapping("room/{roomId}")
   public ResponseEntity<List<Message>> getMessages(@PathVariable("roomId") String roomId) {
     try {
       return ResponseEntity.ok(messageService.getMessages(roomId));
@@ -26,8 +27,11 @@ public class MessageController {
     }
   }
 
-  @MessageMapping("/sendMessage")
-  public void sendMessage(@Header("simpSessionId") String sessionId, @Payload String message) {
-    messageService.sendMessage(sessionId, message);
+  @MessageMapping("message/room/{roomId}/sendMessage/sendMessage")
+  public void sendMessage(@Header("simpSessionId") String sessionId,
+                          @DestinationVariable("roomId") String roomId,
+                          @Payload String message) {
+
+    messageService.sendMessage(roomId, sessionId, message);
   }
 }

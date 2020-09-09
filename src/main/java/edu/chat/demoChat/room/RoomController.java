@@ -15,7 +15,9 @@ public class RoomController {
   @PostMapping("create")
   public ResponseEntity<Room> createRoom() {
     try {
-      return ResponseEntity.ok(roomService.createRoom());
+      var createdRoom = roomService.createRoom();
+      
+      return ResponseEntity.ok(createdRoom);
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }

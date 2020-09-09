@@ -22,21 +22,6 @@ public class MemoryRoomService implements RoomService {
   private final RoomRepository roomRepository;
   private final JanusService janusService;
 
-  private enum Requests {
-    CREATE("create");
-
-    private final String req;
-
-    Requests(String req) {
-      this.req = req;
-    }
-
-    @Override
-    public String toString() {
-      return req;
-    }
-  }
-
   @Override
   public Room createRoom() {
     try {

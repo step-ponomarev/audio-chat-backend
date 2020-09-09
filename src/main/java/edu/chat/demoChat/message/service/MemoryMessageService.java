@@ -23,9 +23,8 @@ public class MemoryMessageService implements MessageService {
   }
 
   @Override
-  public Message sendMessage(String senderId, String msg) {
+  public Message sendMessage(String roomId, String senderId, String msg) {
     var senderName = guestRepository.findById(senderId).getName();
-    var roomId = guestRepository.findById(senderId).getRoomId();
 
     var message = messageRepository.save(new Message(senderName, roomId, msg, LocalDateTime.now()));
 

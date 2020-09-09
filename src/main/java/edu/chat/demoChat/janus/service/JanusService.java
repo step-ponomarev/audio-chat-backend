@@ -5,9 +5,10 @@ import edu.chat.demoChat.janus.dto.CreateAudioRoomDTO;
 import edu.chat.demoChat.janus.dto.CreateSessionDTO;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public interface JanusService {
-  void createAudioRoom(CreateAudioRoomDTO createAudioRoomDTO, String sessionId, String handleId) throws IOException, InterruptedException;
+  void createAudioRoom(CreateAudioRoomDTO createAudioRoomDTO, String sessionId, String handleId) throws IOException, InterruptedException, URISyntaxException;
 
   String createSession(CreateSessionDTO createSessionDTO) throws IOException, InterruptedException;
 
