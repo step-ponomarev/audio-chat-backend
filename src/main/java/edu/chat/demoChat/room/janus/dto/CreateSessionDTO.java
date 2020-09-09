@@ -4,13 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Builder
-public class CreateAudioRoomDTO {
-  private final String janus = "message";
-  private final String error = null;
+public class CreateSessionDTO {
+  private final String janus = "create";
   private String transaction;
-  private CreateAudioRoomBody body;
 }
