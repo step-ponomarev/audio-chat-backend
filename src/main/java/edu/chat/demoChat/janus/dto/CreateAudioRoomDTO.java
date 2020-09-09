@@ -1,4 +1,4 @@
-package edu.chat.demoChat.room.janus.dto;
+package edu.chat.demoChat.janus.dto;
 
 import lombok.Builder;
 import lombok.Getter;

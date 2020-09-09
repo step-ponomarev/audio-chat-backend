@@ -1,8 +1,8 @@
-package edu.chat.demoChat.room.janus.service;
+package edu.chat.demoChat.janus.service;
 
-import edu.chat.demoChat.room.janus.dto.AttachAudioBridgePluginDTO;
-import edu.chat.demoChat.room.janus.dto.CreateAudioRoomDTO;
-import edu.chat.demoChat.room.janus.dto.CreateSessionDTO;
+import edu.chat.demoChat.janus.dto.AttachAudioBridgePluginDTO;
+import edu.chat.demoChat.janus.dto.CreateAudioRoomDTO;
+import edu.chat.demoChat.janus.dto.CreateSessionDTO;
 
 import java.io.IOException;
 

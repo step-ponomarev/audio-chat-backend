@@ -1,11 +1,11 @@
 package edu.chat.demoChat.room.service;
 
 import edu.chat.demoChat.room.Room;
-import edu.chat.demoChat.room.janus.dto.AttachAudioBridgePluginDTO;
-import edu.chat.demoChat.room.janus.dto.CreateAudioRoomBody;
-import edu.chat.demoChat.room.janus.dto.CreateAudioRoomDTO;
-import edu.chat.demoChat.room.janus.dto.CreateSessionDTO;
-import edu.chat.demoChat.room.janus.service.JanusService;
+import edu.chat.demoChat.janus.dto.AttachAudioBridgePluginDTO;
+import edu.chat.demoChat.janus.dto.CreateAudioRoomBody;
+import edu.chat.demoChat.janus.dto.CreateAudioRoomDTO;
+import edu.chat.demoChat.janus.dto.CreateSessionDTO;
+import edu.chat.demoChat.janus.service.JanusService;
 import edu.chat.demoChat.room.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
