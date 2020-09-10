@@ -9,6 +9,7 @@ public class Guest {
   private String id;
   private String name;
   private String roomId;
+  private String SessionId;
 
   public Guest(String id, String roomId) {
     this.id = id;

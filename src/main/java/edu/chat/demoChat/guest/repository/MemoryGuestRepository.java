@@ -27,6 +27,14 @@ public class MemoryGuestRepository implements GuestRepository {
   }
 
   @Override
+  public Guest findBySessionId(String sessionId) {
+    return guestList.stream()
+        .filter(g -> sessionId.equals(g.getSessionId()))
+        .findAny()
+        .orElse(null);
+  }
+
+  @Override
   public List<Guest> findByRoomId(String roomId) {
     return guestList.stream()
         .filter(g -> g.getRoomId().equals(roomId))
@@ -35,6 +43,8 @@ public class MemoryGuestRepository implements GuestRepository {
 
   @Override
   public Guest save(Guest guest) {
+    guestList.removeIf(g -> g.getId().equals(guest.getId()));
+
     guest.setName("Guest " + guest.getId());
 
     guestList.add(guest);

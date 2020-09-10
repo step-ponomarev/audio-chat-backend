@@ -16,7 +16,7 @@ public class RoomController {
   public ResponseEntity<Room> createRoom() {
     try {
       var createdRoom = roomService.createRoom();
-      
+
       return ResponseEntity.ok(createdRoom);
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();

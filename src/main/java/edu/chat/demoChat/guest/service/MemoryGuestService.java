@@ -5,10 +5,12 @@ import edu.chat.demoChat.guest.repository.GuestRepository;
 import edu.chat.demoChat.signalingService.SignalingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service("memoryGuestService")
@@ -23,26 +25,24 @@ public class MemoryGuestService implements GuestService {
   }
 
   @Override
-  public Guest addGuest(String id, String roomId) {
-    var guest = guestRepository.save(new Guest(id, roomId));
+  public Guest createGuest(String roomId) {
+    var id = UUID.randomUUID().toString();
 
-    signalingService.signalGuestJoinedRoom(id, roomId);
-    signalingService.signalToJoinedGuest(id, roomId);
-
-    return guest;
+    return guestRepository.save(new Guest(id, roomId));
   }
 
   @Override
-  public void removeGuest(String id) {
-    signalingService.signalGuestLeavedRoom(id);
-    guestRepository.delete(id);
+  public void removeGuest(String guestId) {
+    signalingService.signalGuestLeavedRoom(guestId);
+
+    guestRepository.delete(guestId);
   }
 
   @Override
-  public List<Guest> getGuestsWithoutCurrent(String roomId, String sessionId) {
-    return guestRepository.findByRoomId(roomId)
-        .stream()
-        .filter(guest -> !guest.getId().equals(sessionId))
-        .collect(Collectors.toList());
+  public void registerUser(String sessionId, String guestId, String roomId) {
+    var guest = guestRepository.findById(guestId);
+    guest.setSessionId(sessionId);
+
+    signalingService.signalGuestJoinedRoom(guestRepository.save(guest));
   }
 }

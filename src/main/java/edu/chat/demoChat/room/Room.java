@@ -1,27 +1,19 @@
 package edu.chat.demoChat.room;
 
-import edu.chat.demoChat.guest.Guest;
-import edu.chat.demoChat.message.Message;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Room {
   private String id;
   private LocalDateTime lastActiveTime;
-
-  public Room(String id, LocalDateTime lastActiveTime) {
-    this.id = id;
-    this.lastActiveTime = lastActiveTime;
-  }
-
+  
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

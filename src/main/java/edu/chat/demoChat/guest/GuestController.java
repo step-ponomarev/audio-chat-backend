@@ -18,7 +18,7 @@ public class GuestController {
   private final GuestService guestService;
 
   @GetMapping("room/{roomId}")
-  public ResponseEntity<List<Guest>> getGuests(@PathVariable("roomId") String roomId, @Header("simpSessionId") String sessionId) {
+  public ResponseEntity<List<Guest>> getGuests(@PathVariable("roomId") String roomId) {
     try {
       return ResponseEntity.ok(guestService.getGuests(roomId));
     } catch (Exception e) {
@@ -26,10 +26,29 @@ public class GuestController {
     }
   }
 
-  @MessageMapping("guest/room/{roomId}/registerGuest")
-  public void registerGuest(@DestinationVariable String roomId, @Header("simpSessionId") String sessionId) {
-    System.out.println(roomId);
+  @GetMapping("room/{roomId}/create")
+  public ResponseEntity<Guest> createGuest(@PathVariable("roomId") String roomId) {
+    try {
+      return ResponseEntity.ok(guestService.createGuest(roomId));
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
 
-    guestService.addGuest(sessionId, roomId);
+  @GetMapping("{guestId}/remove")
+  public ResponseEntity removeGuest(@PathVariable("guestId") String guestId) {
+    try {
+      guestService.removeGuest(guestId);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @MessageMapping("guest/{guestId}/room/{roomId}/registerGuest")
+  public void registerUser(@Header("simpSessionId") String sessionId,
+                           @DestinationVariable("guestId") String guestId,
+                           @DestinationVariable("guestId") String roomId) {
+    guestService.registerUser(sessionId, guestId, roomId);
   }
 }

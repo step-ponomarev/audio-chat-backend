@@ -1,13 +1,12 @@
 package edu.chat.demoChat.signalingService;
 
+import edu.chat.demoChat.guest.Guest;
 import edu.chat.demoChat.message.Message;
 
 public interface SignalingService {
-  void signalGuestJoinedRoom(String guestId, String roomId);
-
-  void signalToJoinedGuest(String id, String roomId);
+  void signalGuestJoinedRoom(Guest guest);
 
   void signalMessageSended(Message message);
 
-  void signalGuestLeavedRoom(String id);
+  void signalGuestLeavedRoom(String guestId);
 }

@@ -27,11 +27,11 @@ public class MessageController {
     }
   }
 
-  @MessageMapping("message/room/{roomId}/sendMessage/sendMessage")
-  public void sendMessage(@Header("simpSessionId") String sessionId,
-                          @DestinationVariable("roomId") String roomId,
+  @MessageMapping("message/room/{roomId}/guest/{guestId}/sendMessage")
+  public void sendMessage(@DestinationVariable("roomId") String roomId,
+                          @DestinationVariable("guestId") String guestId,
                           @Payload String message) {
 
-    messageService.sendMessage(roomId, sessionId, message);
+    messageService.sendMessage(roomId, guestId, message);
   }
 }

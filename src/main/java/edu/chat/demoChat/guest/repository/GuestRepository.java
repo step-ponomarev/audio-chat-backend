@@ -7,6 +7,8 @@ import java.util.List;
 public interface GuestRepository {
   List<Guest> findAll();
 
+  Guest findBySessionId(String sessionId);
+
   Guest findById(String id);
 
   List<Guest> findByRoomId(String roomId);
