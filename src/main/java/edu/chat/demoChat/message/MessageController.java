@@ -1,13 +1,12 @@
 package edu.chat.demoChat.message;
 
-import edu.chat.demoChat.message.service.MessageService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import edu.chat.demoChat.message.service.MessageService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
