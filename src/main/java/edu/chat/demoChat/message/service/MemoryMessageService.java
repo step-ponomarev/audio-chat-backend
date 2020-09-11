@@ -14,7 +14,6 @@ import java.util.List;
 @Service("memoryMessageService")
 public class MemoryMessageService implements MessageService {
   private final MessageRepository messageRepository;
-  private final GuestRepository guestRepository;
   private final SignalingService signalingService;
 
   @Override
@@ -24,9 +23,8 @@ public class MemoryMessageService implements MessageService {
 
   @Override
   public Message sendMessage(String roomId, String senderId, String msg) {
-    var senderName = guestRepository.findById(senderId).getName();
 
-    var message = messageRepository.save(new Message(senderName, roomId, msg, LocalDateTime.now()));
+    var message = messageRepository.save(new Message(senderId, roomId, msg, LocalDateTime.now()));
 
     signalingService.signalMessageSended(message);
 
