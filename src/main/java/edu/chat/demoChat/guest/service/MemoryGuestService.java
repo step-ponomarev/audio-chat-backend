@@ -5,12 +5,11 @@ import edu.chat.demoChat.guest.repository.GuestRepository;
 import edu.chat.demoChat.signalingService.SignalingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service("memoryGuestService")
@@ -22,6 +21,13 @@ public class MemoryGuestService implements GuestService {
   @Override
   public List<Guest> getGuests(String roomId) {
     return guestRepository.findByRoomId(roomId);
+  }
+
+  @Override
+  public List<Guest> getActiveGuests(String roomId) {
+    return guestRepository
+        .findByRoomId(roomId).stream().filter(Guest::getActive)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -46,7 +52,13 @@ public class MemoryGuestService implements GuestService {
   @Override
   public void registerUser(String sessionId, String guestId, String roomId) {
     var guest = guestRepository.findById(guestId);
+
+    if (guest.getActive()) {
+      return;
+    }
+
     guest.setSessionId(sessionId);
+    guest.setActive(true);
 
     signalingService.signalGuestJoinedRoom(guestRepository.save(guest));
   }

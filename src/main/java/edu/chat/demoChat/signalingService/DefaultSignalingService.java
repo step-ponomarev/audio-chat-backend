@@ -6,7 +6,6 @@ import edu.chat.demoChat.message.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
@@ -47,8 +46,15 @@ public class DefaultSignalingService implements SignalingService {
 
   @EventListener
   public void handleSessionDisconnect(SessionDisconnectEvent event) {
-    var guestId = guestRepository.findBySessionId(event.getSessionId()).getId();
+    var guest = guestRepository.findBySessionId(event.getSessionId());
 
-    this.signalGuestLeavedRoom(guestId);
+    if (guest == null) {
+      return;
+    }
+
+    guest.setActive(false);
+    guestRepository.save(guest);
+
+    this.signalGuestLeavedRoom(guest.getId());
   }
 }
