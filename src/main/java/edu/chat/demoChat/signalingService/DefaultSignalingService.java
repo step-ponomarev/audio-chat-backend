@@ -50,6 +50,5 @@ public class DefaultSignalingService implements SignalingService {
     var guestId = guestRepository.findBySessionId(event.getSessionId()).getId();
 
     this.signalGuestLeavedRoom(guestId);
-    guestRepository.delete(guestId);
   }
 }

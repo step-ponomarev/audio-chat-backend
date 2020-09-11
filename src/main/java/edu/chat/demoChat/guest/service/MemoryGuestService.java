@@ -25,6 +25,11 @@ public class MemoryGuestService implements GuestService {
   }
 
   @Override
+  public Guest getGuest(String guestId) {
+    return guestRepository.findById(guestId);
+  }
+
+  @Override
   public Guest createGuest(String roomId) {
     var id = UUID.randomUUID().toString();
 

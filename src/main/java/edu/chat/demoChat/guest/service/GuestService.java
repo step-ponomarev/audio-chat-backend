@@ -12,4 +12,6 @@ public interface GuestService {
   void removeGuest(String guestId);
 
   void registerUser(String sessionId, String guestId, String roomId);
+
+  Guest getGuest(String guestId);
 }

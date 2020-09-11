@@ -26,6 +26,15 @@ public class GuestController {
     }
   }
 
+  @GetMapping("{guestId}")
+  public ResponseEntity<Guest> getGuest(@PathVariable("guestId") String guestId) {
+    try {
+      return ResponseEntity.ok(guestService.getGuest(guestId));
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
   @GetMapping("room/{roomId}/create")
   public ResponseEntity<Guest> createGuest(@PathVariable("roomId") String roomId) {
     try {
