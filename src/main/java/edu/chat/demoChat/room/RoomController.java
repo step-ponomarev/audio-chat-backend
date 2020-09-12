@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class RoomController {
   private final MemoryRoomService roomService;
 
-  @PostMapping("create")
+  @GetMapping("create")
   public ResponseEntity<Room> createRoom() {
     try {
       var createdRoom = roomService.createRoom();
