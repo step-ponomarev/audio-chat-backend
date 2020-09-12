@@ -26,6 +26,6 @@ jobs:
         with:
           host: ${{ secrets.DEPLOY_IP }}
           username: ${{ secrets.DEPLOY_USER }}
-          key: : ${{ secrets.DEPLOY_SSH }}
+          key: ${{ secrets.DEPLOY_SSH }}
           script: whoami
 
