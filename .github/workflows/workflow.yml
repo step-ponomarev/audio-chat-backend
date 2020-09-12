@@ -25,4 +25,4 @@ jobs:
         run: touch ssh.pem && echo ${{ secrets.DEPLOY_USER }} >> ssh.pem
 
       - name: copy file via ssh password
-        run: scp -i ./ssh.pem -r ./target ${{ secrets.DEPLOY_USER }}@${{ secret.DEPLOY_IP }}:/home/azureuser
+        run: scp -i ./ssh.pem -r ./target ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_IP }}:/home/azureuser
