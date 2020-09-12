@@ -19,7 +19,7 @@ jobs:
           java-version: '14'
 
       - name: Build with Maven
-        run: mvn install
+        run: mvn install && cp Dockerfile ./target && cp docker-compose.yml ./target
 
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
@@ -27,6 +27,6 @@ jobs:
           host: ${{ secrets.DEPLOY_IP }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH }}
-          rm: true
           target: "/home/azureuser"
-          source: "target/"
+          source: "target"
+          rm: true
