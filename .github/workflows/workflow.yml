@@ -26,4 +26,4 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH }}
           REMOTE_HOST: ${{ secrets.DEPLOY_IP }}
-          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          REMOTE_USER: ${{ secrets.DEPLOY_USER  }}
