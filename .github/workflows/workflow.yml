@@ -25,7 +25,7 @@ jobs:
         uses: garygrossgarten/github-action-scp@release
         with:
           local: target
-          remote: home/azureuser
+          remote: home/azureuser/app
           host: ${{ secrets.DEPLOY_IP }}
           username: ${{ secrets.DEPLOY_USER }}
           privateKey: ${{ secrets.DEPLOY_SSH }}
