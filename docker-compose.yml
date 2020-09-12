@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.8'
 services:
   janus-gateway:
     image: 'canyan/janus-gateway:latest'
@@ -13,3 +13,8 @@ services:
     volumes:
       - "./.conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
     restart: always
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
