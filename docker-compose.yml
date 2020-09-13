@@ -20,4 +20,4 @@ services:
     depends_on:
       - janus-gateway
     ports:
-      - "443:8080"
+      - "8080:8080"
