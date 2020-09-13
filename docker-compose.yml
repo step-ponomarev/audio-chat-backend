@@ -12,10 +12,10 @@ services:
       - "7089:7089"
     volumes:
       - "./conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
+      - "./conf/janus/janus.jcfg:/usr/local/etc/janus/janus.jcfg"
     restart: always
 
   app:
-
     build: .
     depends_on:
       - janus-gateway
