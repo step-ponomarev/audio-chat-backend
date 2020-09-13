@@ -11,7 +11,10 @@ services:
       - "7088:7088"
       - "7089:7089"
     volumes:
-      - "./conf/janus:/usr/local/etc/janus"
+      - "./conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
+      - "./conf/janus/janus.transport.http.jcfg:/usr/local/etc/janus/janus.transport.http.jcfg"
+      - "./conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
+      - "./conf/janus/janus.transport.websockets.jcfg:/usr/local/etc/janus.transport.websockets.jcfg"
     restart: always
 
   app:
