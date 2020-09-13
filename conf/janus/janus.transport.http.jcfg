@@ -1,0 +1,5 @@
+general: {
+	base_path = "/janus"			# Base path to bind to in the web server (plain HTTP only)
+	https = true					# Whether to enable HTTPS (default=false)
+	secure_port = 8089				# Web server HTTPS port, if enabled
+}
