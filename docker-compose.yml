@@ -11,9 +11,9 @@ services:
       - "7088:7088"
       - "7089:7089"
     volumes:
+      - "./conf/janus/janus.jcfg:/usr/local/etc/janus/janus.jcfg"
       - "./conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
       - "./conf/janus/janus.transport.http.jcfg:/usr/local/etc/janus/janus.transport.http.jcfg"
-      - "./conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
       - "./conf/janus/janus.transport.websockets.jcfg:/usr/local/etc/janus.transport.websockets.jcfg"
     restart: always
 
@@ -22,4 +22,4 @@ services:
     depends_on:
       - janus-gateway
     ports:
-      - "8080:8080"
+      - "443:8080"
