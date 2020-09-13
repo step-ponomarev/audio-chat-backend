@@ -11,12 +11,8 @@ services:
       - "7088:7088"
       - "7089:7089"
     volumes:
-      - "./cert/key.pem:/opt/janus/share/janus/certs/key.pem"
-      - "./cert/cart.pem:/opt/janus/share/janus/certs/cart.pem"
       - "./conf/janus/janus.jcfg:/usr/local/etc/janus/janus.jcfg"
       - "./conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
-      - "./conf/janus/janus.transport.http.jcfg:/usr/local/etc/janus/janus.transport.http.jcfg"
-      - "./conf/janus/janus.transport.websockets.jcfg:/usr/local/etc/janus.transport.websockets.jcfg"
     restart: always
 
   app:
@@ -24,4 +20,4 @@ services:
     depends_on:
       - janus-gateway
     ports:
-      - "443:8080"
+      - "8080:8080"

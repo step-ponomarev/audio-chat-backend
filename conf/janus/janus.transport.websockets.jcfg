@@ -1,9 +1,0 @@
-general: {
-	wss = true						# Whether to enable secure WebSockets
-	wss_port = 8989				# WebSockets server secure port, if enabled
-}
-
-certificates: {
-	cert_pem = "/opt/janus/share/janus/certs/cart.pem"
-	cert_key = "/opt/janus/share/janus/certs/key.pem"
-}
