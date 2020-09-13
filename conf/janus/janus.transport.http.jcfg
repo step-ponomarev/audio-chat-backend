@@ -5,6 +5,6 @@ general: {
 }
 
 certificates: {
-	cert_pem = "/usr/cert/cert.pem"
-	cert_key = "/usr/cert/key.pem"
+	cert_pem = "/opt/janus/share/janus/certs/cart.pem"
+	cert_key = "/opt/janus/share/janus/certs/key.pem"
 }
