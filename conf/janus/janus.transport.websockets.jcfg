@@ -2,3 +2,8 @@ general: {
 	wss = true						# Whether to enable secure WebSockets
 	wss_port = 8989				# WebSockets server secure port, if enabled
 }
+
+certificates: {
+	cert_pem = "/usr/cert/cert.pem"
+	cert_key = "/usr/cert/key.pem"
+}

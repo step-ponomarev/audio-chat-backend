@@ -3,3 +3,8 @@ general: {
 	https = true					# Whether to enable HTTPS (default=false)
 	secure_port = 8089				# Web server HTTPS port, if enabled
 }
+
+certificates: {
+	cert_pem = "/usr/cert/cert.pem"
+	cert_key = "/usr/cert/key.pem"
+}

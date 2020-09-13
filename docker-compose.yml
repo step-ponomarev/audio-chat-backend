@@ -11,6 +11,7 @@ services:
       - "7088:7088"
       - "7089:7089"
     volumes:
+      - "cert:/usr/cert"
       - "./conf/janus/janus.jcfg:/usr/local/etc/janus/janus.jcfg"
       - "./conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
       - "./conf/janus/janus.transport.http.jcfg:/usr/local/etc/janus/janus.transport.http.jcfg"
