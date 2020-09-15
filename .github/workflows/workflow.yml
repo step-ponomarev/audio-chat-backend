@@ -22,7 +22,7 @@ jobs:
         run: mvn clean && mvn install
 
       - name: Copy neded files
-        run: cp Dockerfile ./target && cp docker-compose.yml ./target && cp -r conf target
+        run: cp Dockerfile ./target && cp docker-compose.yml ./target && cp -r data target
 
       - name: Copy single file to remote
         uses: garygrossgarten/github-action-scp@release
