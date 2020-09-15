@@ -30,11 +30,9 @@ services:
       - "./data/certbot/www:/var/www/certbot"
     ports:
       - "9090:9090"
-      - "443:443"
+      - "8443:8443"
     depends_on:
       - certbot
-#    environment:
-#      - NGINX_PORT=9090
 
   certbot:
     image: certbot/certbot
