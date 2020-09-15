@@ -21,6 +21,9 @@ jobs:
       - name: Build with Maven
         run: mvn clean && mvn install
 
+      - name: Add SSL
+        run: chmod +x init-letsencrypt.sh && ./init-letsencrypt.sh
+
       - name: Copy neded files
         run: cp Dockerfile ./target && cp docker-compose.yml ./target && cp -r data target
 

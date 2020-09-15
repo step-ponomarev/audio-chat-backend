@@ -31,6 +31,8 @@ services:
     ports:
       - "9090:9090"
       - "443:443"
+    depends_on:
+      - certbot
 #    environment:
 #      - NGINX_PORT=9090
 
