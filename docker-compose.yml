@@ -1,26 +1,26 @@
 version: '3.8'
 services:
-  janus-gateway:
-    image: 'canyan/janus-gateway:latest'
-    command: ["/usr/local/bin/janus", "-F", "/usr/local/etc/janus"]
-    ports:
-      - "8188:8188"
-      - "8088:8088"
-      - "8889:8889"
-      - "8000:8000"
-      - "7088:7088"
-      - "7089:7089"
-    volumes:
-      - "./data/conf/janus/janus.jcfg:/usr/local/etc/janus/janus.jcfg"
-      - "./data/conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
-    restart: always
-
-  app:
-    build: .
-    depends_on:
-      - janus-gateway
-    ports:
-      - "8080:8080"
+#  janus-gateway:
+#    image: 'canyan/janus-gateway:latest'
+#    command: ["/usr/local/bin/janus", "-F", "/usr/local/etc/janus"]
+#    ports:
+#      - "8188:8188"
+#      - "8088:8088"
+#      - "8889:8889"
+#      - "8000:8000"
+#      - "7088:7088"
+#      - "7089:7089"
+#    volumes:
+#      - "./data/conf/janus/janus.jcfg:/usr/local/etc/janus/janus.jcfg"
+#      - "./data/conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
+#    restart: always
+#
+#  app:
+#    build: .
+#    depends_on:
+#      - janus-gateway
+#    ports:
+#      - "8080:8080"
 
   proxy:
     image: nginx
