@@ -15,7 +15,7 @@ staging=0 # Set to 1 if you're testing your setup to avoid hitting request limit
 echo "### Creating dummy certificate for $domains ..."
 path="$data_path/conf/live/$domain"
 mkdir -p $path
-openssl req -x509 -nodes -newkey rsa:1024 -days 365\
+openssl req -x509 -nodes -newkey rsa:2048 -days 365\
     -keyout "$path/privkey.pem" \
     -out "$path/fullchain.pem" \
     -subj "/CN=localhost"
