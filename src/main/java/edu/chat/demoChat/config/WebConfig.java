@@ -14,5 +14,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH")
         .allowedOrigins("*");
   }
-
 }
