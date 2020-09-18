@@ -7,7 +7,6 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 
 @Configuration
@@ -24,9 +23,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/chat-app")
-        .setAllowedOrigins("*")
-        .setHandshakeHandler(new DefaultHandshakeHandler())
-        .withSockJS();
+    registry
+        .addEndpoint("/chat-app")
+        .withSockJS()
+        .setClientLibraryUrl("https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js");
   }
 }
