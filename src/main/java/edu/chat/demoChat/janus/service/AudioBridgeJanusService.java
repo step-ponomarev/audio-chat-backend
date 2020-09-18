@@ -18,7 +18,7 @@ import java.util.HashMap;
 @Service
 @RequiredArgsConstructor
 public class AudioBridgeJanusService implements JanusService {
-  private final String HOST = "http://janus-gateway:8088/janus";
+  private final String HOST = "http://localhost:8088/janus";
   private final ObjectMapper objectMapper;
   private final HttpClient httpClient;
 
