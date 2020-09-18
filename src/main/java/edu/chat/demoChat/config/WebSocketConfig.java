@@ -25,7 +25,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   public void registerStompEndpoints(StompEndpointRegistry registry) {
     registry
         .addEndpoint("/chat-app")
-        .setAllowedOrigins("http://voice-chat.website.yandexcloud.net", "https://voice-chat.website.yandexcloud.net")
+        .setAllowedOrigins(
+            "http://voice-chat.website.yandexcloud.net",
+            "https://voice-chat.website.yandexcloud.net",
+            "*"
+        )
         .withSockJS()
         .setClientLibraryUrl("https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js");
   }
