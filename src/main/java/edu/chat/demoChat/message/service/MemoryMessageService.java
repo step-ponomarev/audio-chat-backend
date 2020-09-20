@@ -1,6 +1,5 @@
 package edu.chat.demoChat.message.service;
 
-import edu.chat.demoChat.guest.repository.GuestRepository;
 import edu.chat.demoChat.message.Message;
 import edu.chat.demoChat.message.repository.MessageRepository;
 import edu.chat.demoChat.signalingService.SignalingService;
@@ -23,7 +22,6 @@ public class MemoryMessageService implements MessageService {
 
   @Override
   public Message sendMessage(String roomId, String senderId, String msg) {
-
     var message = messageRepository.save(new Message(senderId, roomId, msg, LocalDateTime.now()));
 
     signalingService.signalMessageSended(message);
