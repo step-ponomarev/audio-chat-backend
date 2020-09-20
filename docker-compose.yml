@@ -15,12 +15,12 @@ services:
       - "./data/conf/janus/janus.plugin.audiobridge.jcfg:/usr/local/etc/janus/janus.plugin.audiobridge.jcfg"
     restart: always
 
-#  app:
-#    build: .
-#    depends_on:
-#      - janus-gateway
-#    ports:
-#      - "8080:8080"
+  app:
+    build: .
+    depends_on:
+      - janus-gateway
+    ports:
+      - "8080:8080"
 
 #  proxy:
 #    image: nginx
