@@ -1,20 +1,16 @@
 package edu.chat.demoChat.guest.repository;
 
 import edu.chat.demoChat.guest.Guest;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface GuestRepository {
-  List<Guest> findAll();
+@Repository
+public interface GuestRepository extends CrudRepository<Guest, String> {
+  List<Guest> findAllByRoomId(String roomId);
 
   Guest findBySessionId(String sessionId);
 
-  Guest findById(String id);
-
-  List<Guest> findByRoomId(String roomId);
-
-  Guest save(Guest guest);
-
-  void delete(String id);
-
+  void deleteById(String id);
 }

@@ -1,10 +1,10 @@
 package edu.chat.demoChat.message.service;
 
+import lombok.RequiredArgsConstructor;
 import edu.chat.demoChat.message.Message;
+import org.springframework.stereotype.Service;
 import edu.chat.demoChat.message.repository.MessageRepository;
 import edu.chat.demoChat.signalingService.SignalingService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +17,7 @@ public class MemoryMessageService implements MessageService {
 
   @Override
   public List<Message> getMessages(String roomId) {
-    return messageRepository.findByRoomId(roomId);
+    return messageRepository.findAllByRoomId(roomId);
   }
 
   @Override

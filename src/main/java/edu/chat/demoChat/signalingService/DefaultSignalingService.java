@@ -20,7 +20,7 @@ public class DefaultSignalingService implements SignalingService {
 
   @Override
   public void signalGuestJoinedRoom(Guest guest) {
-    guestRepository.findByRoomId(guest.getRoomId()).forEach(g -> {
+    guestRepository.findAllByRoomId(guest.getRoomId()).forEach(g -> {
       if (!guest.getId().equals(g.getId())) {
         var url = "/queue/guest/" + g.getId() + "/room/" + guest.getRoomId() + "/guestHasJoined";
         messagingTemplate.convertAndSend(url, guest);
@@ -30,7 +30,7 @@ public class DefaultSignalingService implements SignalingService {
 
   @Override
   public void signalGuestLeavedRoom(String id) {
-    var guest = guestRepository.findById(id);
+    var guest = guestRepository.findById(id).get();
     var roomId = guest.getRoomId();
     var url = "/queue/room/" + roomId + "/guestHasLeaved";
 
