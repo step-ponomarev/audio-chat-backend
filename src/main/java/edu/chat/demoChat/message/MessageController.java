@@ -15,22 +15,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("api/message")
 public class MessageController {
-    private final MessageService messageService;
+  private final MessageService messageService;
 
-    @GetMapping("room/{roomId}")
-    public ResponseEntity<List<Message>> getMessages(@PathVariable("roomId") String roomId) {
-        try {
-            return ResponseEntity.ok(messageService.getMessages(roomId));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+  @GetMapping("room/{roomId}")
+  public ResponseEntity<List<Message>> getMessages(@PathVariable("roomId") String roomId) {
+    try {
+      return ResponseEntity.ok(messageService.getMessages(roomId));
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
     }
+  }
 
-    @MessageMapping("message/room/{roomId}/guest/{guestId}/sendMessage")
-    public void sendMessage(@DestinationVariable("roomId") String roomId,
-                            @DestinationVariable("guestId") String guestId,
-                            @Payload String message) {
+  @MessageMapping("message/room/{roomId}/guest/{guestId}/sendMessage")
+  public void sendMessage(@DestinationVariable("roomId") String roomId,
+                          @DestinationVariable("guestId") String guestId,
+                          @Payload String message) {
 
-        messageService.sendMessage(roomId, guestId, message);
-    }
+    messageService.sendMessage(roomId, guestId, message);
+  }
 }

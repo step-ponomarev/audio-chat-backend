@@ -4,7 +4,6 @@ import edu.chat.demoChat.guest.Guest;
 import edu.chat.demoChat.guest.repository.GuestRepository;
 import edu.chat.demoChat.signalingService.SignalingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,26 +12,25 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service("memoryGuestService")
-public class MemoryGuestService implements GuestService {
-  @Qualifier("memoryGuestRepository")
+public class GuestServiceImpl implements GuestService {
   private final GuestRepository guestRepository;
   private final SignalingService signalingService;
 
   @Override
   public List<Guest> getGuests(String roomId) {
-    return guestRepository.findByRoomId(roomId);
+    return guestRepository.findAllByRoomId(roomId);
   }
 
   @Override
   public List<Guest> getActiveGuests(String roomId) {
     return guestRepository
-        .findByRoomId(roomId).stream().filter(Guest::getActive)
+        .findAllByRoomId(roomId).stream().filter(Guest::getActive)
         .collect(Collectors.toList());
   }
 
   @Override
   public Guest getGuest(String guestId) {
-    return guestRepository.findById(guestId);
+    return guestRepository.findById(guestId).get();
   }
 
   @Override
@@ -46,12 +44,12 @@ public class MemoryGuestService implements GuestService {
   public void removeGuest(String guestId) {
     signalingService.signalGuestLeavedRoom(guestId);
 
-    guestRepository.delete(guestId);
+    guestRepository.deleteById(guestId);
   }
 
   @Override
   public void registerUser(String sessionId, String guestId, String roomId) {
-    var guest = guestRepository.findById(guestId);
+    var guest = guestRepository.findById(guestId).get();
 
     if (guest.getActive()) {
       return;

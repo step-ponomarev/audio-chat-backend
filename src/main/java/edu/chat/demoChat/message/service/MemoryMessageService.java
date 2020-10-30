@@ -12,20 +12,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service("memoryMessageService")
 public class MemoryMessageService implements MessageService {
-    private final MessageRepository messageRepository;
-    private final SignalingService signalingService;
+  private final MessageRepository messageRepository;
+  private final SignalingService signalingService;
 
-    @Override
-    public List<Message> getMessages(String roomId) {
-        return messageRepository.findByRoomId(roomId);
-    }
+  @Override
+  public List<Message> getMessages(String roomId) {
+    return messageRepository.findAllByRoomId(roomId);
+  }
 
-    @Override
-    public Message sendMessage(String roomId, String senderId, String msg) {
-        var message = messageRepository.save(new Message(senderId, roomId, msg, LocalDateTime.now()));
+  @Override
+  public Message sendMessage(String roomId, String senderId, String msg) {
+    var message = messageRepository.save(new Message(senderId, roomId, msg, LocalDateTime.now()));
 
-        signalingService.signalMessageSended(message);
+    signalingService.signalMessageSended(message);
 
-        return message;
-    }
+    return message;
+  }
 }

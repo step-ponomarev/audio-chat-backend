@@ -1,11 +1,12 @@
 package edu.chat.demoChat.message.repository;
 
 import edu.chat.demoChat.message.Message;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface MessageRepository {
-  Message save(Message message);
-
-  List<Message> findByRoomId(String roomId);
+@Repository
+public interface MessageRepository extends CrudRepository<Message, Long> {
+  List<Message> findAllByRoomId(String roomId);
 }
